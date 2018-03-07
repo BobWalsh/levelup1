@@ -8,8 +8,13 @@ const IndexPage = ({data}) => (
     <p>{data.site.siteMetadata.desc}</p>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
+    <p>{data.allMarkdownRemark.edges.map(({node})=> {
+      return < PostListing post = {node} />
+    })}</p>
   </div>
 );
+
+const PostListing = () => <div>hello cats! not dogs</div>
 
 export default IndexPage;
 
@@ -19,6 +24,17 @@ export const query = graphql`
       siteMetadata {
         title
         desc
+      }
+    }
+    allMarkdownRemark {
+      edges {
+        node {
+          frontmatter {
+            date( formatString: "MMM DD YYYY")
+            title
+          }
+          html
+        }
       }
     }
   }
